@@ -1,13 +1,17 @@
 using Amazon;
 using Amazon.S3;
 using BLL.Interfaces.Auth;
+using BLL.Interfaces.Chat;
 using BLL.Interfaces.Documents;
 using BLL.Services.Auth;
+using BLL.Services.Chat;
 using BLL.Services.Documents;
 using DAL.Data;
 using DAL.Interfaces.Auth;
+using DAL.Interfaces.Chat;
 using DAL.Interfaces.Documents;
 using DAL.Repositories.Auth;
+using DAL.Repositories.Chat;
 using DAL.Repositories.Documents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -35,6 +39,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IFileParserService, SimpleFileParserService>();
         services.AddScoped<IEmbeddingService, GeminiEmbeddingService>();
         services.AddHostedService<UploadJobBackgroundService>();
+
+        // Chat services
+        services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IGeminiChatService, GeminiChatService>();
+        services.AddScoped<IChatService, ChatService>();
 
         services.AddSingleton<IAmazonS3>(_ =>
         {
