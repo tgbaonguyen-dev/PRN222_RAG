@@ -1,0 +1,18 @@
+services:
+  pgvector-db:
+    image: pgvector/pgvector:pg16
+    container_name: prn222_pgvector
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: prn222_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
+
+volumes:
+  pgvector_data:
+    driver: local
